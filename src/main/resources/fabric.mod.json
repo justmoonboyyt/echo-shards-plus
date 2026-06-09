@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "echo_shards_plus",
+	"version": "${version}",
+	"name": "Echo Shards Plus",
+	"description": "This is a mod that gives more uses to echo shards, whether you find them useful or not is your opinion",
+	"authors": [
+		"Just_moonboy"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/echo-shards-plus/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.moonboy.echoshardsplus.EchoShardsPlus"
+		],
+		"client": [
+			"net.moonboy.echoshardsplus.EchoShardsPlusClient"
+		],
+		"fabric-datagen": [
+			"net.moonboy.echoshardsplus.EchoShardsPlusDataGenerator"
+		]
+	},
+	"mixins": [
+		"echo-shards-plus.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
