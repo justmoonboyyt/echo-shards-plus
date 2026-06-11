@@ -2,6 +2,7 @@ package net.moonboy.echoshardsplus;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.moonboy.echoshardsplus.potion.ModPotions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,6 @@ public class EchoShardsPlus implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		LOGGER.info("Hello Fabric world!");
-
+		ModPotions.registerModPotions();
 	}
 }
