@@ -13,5 +13,6 @@ public class EchoShardsPlus implements ModInitializer {
 	public void onInitialize() {
 
 		LOGGER.info("Hello Fabric world!");
+
 	}
 }
