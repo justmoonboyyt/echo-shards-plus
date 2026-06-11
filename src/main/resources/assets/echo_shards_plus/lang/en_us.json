@@ -1,4 +1,11 @@
 {
   "item.minecraft.potion.effect.darkness_potion": "Potion of Darkness",
-  "item.minecraft.potion.effect.extended_darkness_potion": "Potion of Darkness"
+  "item.minecraft.potion.effect.extended_darkness_potion": "Potion of Darkness",
+  "item.minecraft.tipped_arrow.effect.darkness_potion": "Arrow of Darkness",
+  "item.minecraft.tipped_arrow.effect.extended_darkness_potion": "Arrow of Darkness",
+  "item.minecraft.splash_potion.effect.darkness_potion": "Splash Potion of Darkness",
+  "item.minecraft.splash_potion.effect.extended_darkness_potion": "Splash Potion of Darkness",
+  "item.minecraft.lingering_potion.effect.darkness_potion": "Lingering Potion of Darkness",
+  "item.minecraft.lingering_potion.effect.extended_darkness_potion": "Lingering Potion of Darkness"
+
 }

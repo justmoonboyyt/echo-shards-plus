@@ -14,5 +14,6 @@ public class EchoShardsPlus implements ModInitializer {
 	public void onInitialize() {
 
 		ModPotions.registerModPotions();
+		ModPotions.registerPotionsRecipes();
 	}
 }

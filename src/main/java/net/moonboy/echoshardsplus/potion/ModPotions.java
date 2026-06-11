@@ -5,11 +5,11 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
+import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.moonboy.echoshardsplus.EchoShardsPlus;
-import net.moonboy.echoshardsplus.mixin.BrewingRecipeRegistryMixin;
 
 public class ModPotions {
 
@@ -25,7 +25,7 @@ public class ModPotions {
     }
 
     public static void registerPotionsRecipes(){
-        BrewingRecipeRegistryMixin.invokeRegisterPotionRecipe(Potions.AWKWARD, Items.ECHO_SHARD, ModPotions.DARKNESS_POTION);
-        BrewingRecipeRegistryMixin.invokeRegisterPotionRecipe(ModPotions.DARKNESS_POTION, Items.REDSTONE, ModPotions.EXTENDED_DARKNESS_POTION);
+        BrewingRecipeRegistry.registerPotionRecipe(Potions.AWKWARD, Items.ECHO_SHARD, ModPotions.DARKNESS_POTION);
+        BrewingRecipeRegistry.registerPotionRecipe(ModPotions.DARKNESS_POTION, Items.REDSTONE, ModPotions.EXTENDED_DARKNESS_POTION);
     }
 }
