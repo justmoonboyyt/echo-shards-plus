@@ -6,6 +6,7 @@
   "item.minecraft.splash_potion.effect.darkness_potion": "Splash Potion of Darkness",
   "item.minecraft.splash_potion.effect.extended_darkness_potion": "Splash Potion of Darkness",
   "item.minecraft.lingering_potion.effect.darkness_potion": "Lingering Potion of Darkness",
-  "item.minecraft.lingering_potion.effect.extended_darkness_potion": "Lingering Potion of Darkness"
-
+  "item.minecraft.lingering_potion.effect.extended_darkness_potion": "Lingering Potion of Darkness",
+  "block.echo_shards_plus.xp_chamber": "XP Chamber",
+  "itemgroup.echo_shard": "Echo Shards Plus"
 }
