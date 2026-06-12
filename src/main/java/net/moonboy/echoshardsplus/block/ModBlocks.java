@@ -14,7 +14,7 @@ import net.moonboy.echoshardsplus.EchoShardsPlus;
 public class ModBlocks {
 
     public static final Block XP_CHAMBER = registerBlock("xp_chamber",
-            new Block(FabricBlockSettings.copyOf(Blocks.SCULK_CATALYST)));
+            new Block(FabricBlockSettings.copyOf(Blocks.SCULK_CATALYST).requiresTool()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
