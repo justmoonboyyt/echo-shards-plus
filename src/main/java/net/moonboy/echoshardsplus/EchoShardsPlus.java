@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 
 import net.moonboy.echoshardsplus.block.ModBlockEntities;
 import net.moonboy.echoshardsplus.block.ModBlocks;
+import net.moonboy.echoshardsplus.enchantment.ModEnchantments;
 import net.moonboy.echoshardsplus.item.ModItemGroups;
 import net.moonboy.echoshardsplus.potion.ModPotions;
 import org.slf4j.Logger;
@@ -17,9 +18,13 @@ public class EchoShardsPlus implements ModInitializer {
 	public void onInitialize() {
 
 		ModItemGroups.registerItemGroups();
+
 		ModPotions.registerModPotions();
 		ModPotions.registerPotionsRecipes();
+
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerModBlockEntities();
+
+		ModEnchantments.registerModEnchantments();
 	}
 }
