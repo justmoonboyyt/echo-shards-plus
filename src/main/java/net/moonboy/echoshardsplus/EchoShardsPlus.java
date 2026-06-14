@@ -2,6 +2,7 @@ package net.moonboy.echoshardsplus;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.moonboy.echoshardsplus.block.ModBlockEntities;
 import net.moonboy.echoshardsplus.block.ModBlocks;
 import net.moonboy.echoshardsplus.item.ModItemGroups;
 import net.moonboy.echoshardsplus.potion.ModPotions;
@@ -19,5 +20,6 @@ public class EchoShardsPlus implements ModInitializer {
 		ModPotions.registerModPotions();
 		ModPotions.registerPotionsRecipes();
 		ModBlocks.registerModBlocks();
+		ModBlockEntities.registerModBlockEntities();
 	}
 }

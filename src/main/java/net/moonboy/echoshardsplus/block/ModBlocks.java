@@ -14,7 +14,7 @@ import net.moonboy.echoshardsplus.EchoShardsPlus;
 public class ModBlocks {
 
     public static final Block XP_CHAMBER = registerBlock("xp_chamber",
-            new Block(FabricBlockSettings.copyOf(Blocks.SCULK_CATALYST).requiresTool()));
+            new XPChamberBlock(FabricBlockSettings.copyOf(Blocks.SCULK_CATALYST).requiresTool()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
@@ -27,6 +27,6 @@ public class ModBlocks {
     }
 
     public static void registerModBlocks() {
-        EchoShardsPlus.LOGGER.info("Registering Mod Potions for " + EchoShardsPlus.MOD_ID);
+        EchoShardsPlus.LOGGER.info("Registering Mod Blocks for " + EchoShardsPlus.MOD_ID);
     }
 }
