@@ -12,6 +12,7 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import net.minecraft.world.tick.TickPriority;
 
 import java.util.List;
 
@@ -50,7 +51,8 @@ public class XPChamberBlockEntity extends BlockEntity {
 
         if (absorbed) {
             blockEntity.markDirty();
-            world.updateListeners(pos, state, state, 0);
+
+            ((XPChamberBlock) world.getBlockState(pos).getBlock()).pulseCollecting(world.getBlockState(pos), world, pos);
         }
     }
 

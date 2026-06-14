@@ -8,16 +8,29 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.tick.TickPriority;
 import org.jetbrains.annotations.Nullable;
 
 public class XPChamberBlock extends BlockWithEntity {
+    public static final BooleanProperty COLLECTING = BooleanProperty.of("collecting");
+
     public XPChamberBlock(Settings settings) {
         super(settings);
+        setDefaultState(getStateManager().getDefaultState().with(COLLECTING, false));
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(COLLECTING);
     }
 
     @Override
@@ -35,6 +48,13 @@ public class XPChamberBlock extends BlockWithEntity {
         if (world.isClient()) return null;
 
         return checkType(type, ModBlockEntities.XP_CHAMBER_BE, XPChamberBlockEntity::tick);
+    }
+
+    @Override
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (state.get(COLLECTING)) {
+            world.setBlockState(pos, state.with(COLLECTING, false));
+        }
     }
 
     @Override
@@ -69,7 +89,7 @@ public class XPChamberBlock extends BlockWithEntity {
                     }
                   }
                 chamber.markDirty();
-                world.updateListeners(pos, state, state, 0);
+                pulseCollecting(state, world, pos);
             }
         }
         return ActionResult.SUCCESS;
@@ -102,9 +122,16 @@ public class XPChamberBlock extends BlockWithEntity {
                     }
                 }
                 chamber.markDirty();
-                world.updateListeners(pos, state, state, 0);
+                pulseCollecting(state, world, pos);
             }
         }
+    }
+
+    void pulseCollecting(BlockState state, World world, BlockPos pos) {
+        if (!state.get(COLLECTING)) {
+            world.setBlockState(pos, state.with(COLLECTING, true));
+        }
+        world.scheduleBlockTick(pos, this, 1, TickPriority.NORMAL);
     }
 
     private int calculateTotalXP(PlayerEntity player) {
