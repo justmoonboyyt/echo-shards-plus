@@ -30,7 +30,6 @@ public class EchoShardsPlusClient implements ClientModInitializer{
                         ItemStack projectile = ItemStack.fromNbt(projectiles.getCompound(i));
 
                         if (projectile.isOf(Items.ECHO_SHARD)) {
-                            System.out.println("FOUND ECHO SHARD");
                             return 1.0F;
                         }
                     }

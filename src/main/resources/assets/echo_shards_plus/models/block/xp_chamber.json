@@ -2,7 +2,7 @@
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
     "bottom": "echo_shards_plus:block/xp_chamber_bottom",
-    "side": "echo_shards_plus:block/xp_chamber_side",
-    "top": "echo_shards_plus:block/xp_chamber_top"
+    "side": "echo_shards_plus:block/xp_chamber_side_collecting",
+    "top": "echo_shards_plus:block/xp_chamber_top_collecting"
   }
 }
