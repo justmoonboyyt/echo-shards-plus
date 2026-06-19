@@ -9,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import net.moonboy.echoshardsplus.enchantment.ModEnchantments;
 import net.moonboy.echoshardsplus.enchantment.WardenshotEnchantment;
@@ -34,6 +35,34 @@ public class CrossbowItemMixin {
     private void wardenshotGetProjectiles(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
         Predicate<ItemStack> vanilla = cir.getReturnValue();
         cir.setReturnValue(vanilla.or(stack -> stack.isOf(Items.ECHO_SHARD)));
+    }
+
+    @Inject(method = "use", at = @At("HEAD"), cancellable = true)
+    private void wardenshotUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+        ItemStack crossbow = user.getStackInHand(hand);
+
+        if (EnchantmentHelper.getLevel(ModEnchantments.WARDENSHOT, crossbow) > 0) return;
+
+        ItemStack projectile = user.getProjectileType(crossbow);
+        if (projectile.isOf(Items.ECHO_SHARD)) {
+            cir.setReturnValue(TypedActionResult.fail(crossbow));
+            cir.cancel();
+        }
+    }
+
+    @Inject(method = "loadProjectiles", at = @At("HEAD"), cancellable = true)
+    private static void wardenshotLoadProjectiles(
+            LivingEntity shooter,
+            ItemStack crossbow,
+            CallbackInfoReturnable<Boolean> cir
+    ) {
+        ItemStack projectile = shooter.getProjectileType(crossbow);
+        if (!projectile.isOf(Items.ECHO_SHARD)) return;
+
+        if (EnchantmentHelper.getLevel(ModEnchantments.WARDENSHOT, crossbow) <= 0) {
+            cir.setReturnValue(false);
+            cir.cancel();
+        }
     }
 
     @Inject(method = "shoot", at = @At("HEAD"), cancellable = true)
