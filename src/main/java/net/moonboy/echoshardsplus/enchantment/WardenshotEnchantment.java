@@ -45,7 +45,7 @@ public class WardenshotEnchantment extends Enchantment {
                 continue;
             }
 
-            target.damage(shooter.getWorld().getDamageSources().sonicBoom(shooter), 6.5f);
+            target.damage(shooter.getWorld().getDamageSources().sonicBoom(shooter), 10f);
 
             Vec3d knockbackDir = target.getPos().subtract(shooter.getPos()).normalize();
 
