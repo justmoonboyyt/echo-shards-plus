@@ -3,7 +3,8 @@
 	"package": "net.moonboy.echoshardsplus.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"ExampleMixin",
+		"CrossbowItemMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

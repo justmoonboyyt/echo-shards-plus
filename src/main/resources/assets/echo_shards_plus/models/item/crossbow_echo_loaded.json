@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/crossbow",
+  "textures": {
+    "layer0": "echo_shards_plus:item/crossbow_echo_loaded"
+  }
+}

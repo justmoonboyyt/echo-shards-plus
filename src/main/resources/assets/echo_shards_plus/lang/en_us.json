@@ -12,5 +12,6 @@
 
   "itemgroup.echo_shard": "Echo Shards Plus",
 
-  "enchantment.echo_shards_plus.wardenshot": "Wardenshot"
+  "enchantment.echo_shards_plus.wardenshot": "Wardenshot",
+  "enchantment.echo_shards_plus.wardenshot.desc": "Allows Echo Shards to be loaded which shoot off a short range sonic boom"
 }
