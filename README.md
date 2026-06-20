@@ -4,9 +4,7 @@
 
 This mod is available under the MIT license. Feel free to learn from it and incorporate it in your own projects.
 
-<a href="patreon.com/Just_moonboy">
-## Support Me On Patreon!
-</a>
+## [Support Me On Patreon!](patreon.com/Just_moonboy)
 
 ## Partner
 <a href="https://www.neyhost.com">
