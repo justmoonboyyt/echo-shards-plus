@@ -12,6 +12,8 @@ This mod is available under the MIT license. Feel free to learn from it and inco
 
 
 
-
+##
 ## Partner
-<img width="1200" height="250" alt="neyhost-banner-MOONBOY" src="https://www.neyhost.com">
+<a href="https://www.neyhost.com">
+  <img width="1200" height="250" alt="neyhost-banner-MOONBOY" src="https://github.com/user-attachments/assets/9bd4bb34-f6ac-466d-a2fd-70469235e791" />
+</a>
