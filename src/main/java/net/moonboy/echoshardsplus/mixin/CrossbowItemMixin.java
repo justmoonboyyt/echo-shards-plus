@@ -6,6 +6,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -25,44 +28,45 @@ import java.util.function.Predicate;
 @Mixin(CrossbowItem.class)
 public class CrossbowItemMixin {
 
-    @Inject(method = "getHeldProjectiles", at = @At("RETURN"), cancellable = true)
-    private void wardenshotGetHeldProjectiles(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
-        Predicate<ItemStack> vanilla = cir.getReturnValue();
-        cir.setReturnValue(vanilla.or(stack -> stack.isOf(Items.ECHO_SHARD)));
-    }
-
-    @Inject(method = "getProjectiles", at = @At("RETURN"), cancellable = true)
-    private void wardenshotGetProjectiles(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
-        Predicate<ItemStack> vanilla = cir.getReturnValue();
-        cir.setReturnValue(vanilla.or(stack -> stack.isOf(Items.ECHO_SHARD)));
-    }
-
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     private void wardenshotUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         ItemStack crossbow = user.getStackInHand(hand);
 
-        if (EnchantmentHelper.getLevel(ModEnchantments.WARDENSHOT, crossbow) > 0) return;
+        if (EnchantmentHelper.getLevel(ModEnchantments.WARDENSHOT, crossbow) <= 0) return;
 
-        ItemStack projectile = user.getProjectileType(crossbow);
-        if (projectile.isOf(Items.ECHO_SHARD)) {
+        if (CrossbowItem.isCharged(crossbow)) return;
+
+        ItemStack echoShard = findEchoShard(user);
+
+        if(echoShard.isEmpty()){
             cir.setReturnValue(TypedActionResult.fail(crossbow));
             cir.cancel();
+            return;
         }
+        user.setCurrentHand(hand);
+        cir.setReturnValue(TypedActionResult.consume(crossbow));
+        cir.cancel();
     }
 
     @Inject(method = "loadProjectiles", at = @At("HEAD"), cancellable = true)
-    private static void wardenshotLoadProjectiles(
-            LivingEntity shooter,
-            ItemStack crossbow,
-            CallbackInfoReturnable<Boolean> cir
-    ) {
-        ItemStack projectile = shooter.getProjectileType(crossbow);
-        if (!projectile.isOf(Items.ECHO_SHARD)) return;
+    private static void wardenshotLoadProjectiles(LivingEntity shooter, ItemStack crossbow, CallbackInfoReturnable<Boolean> cir) {
+        if (EnchantmentHelper.getLevel(ModEnchantments.WARDENSHOT, crossbow) <= 0) return;
+        if (!(shooter instanceof PlayerEntity player)) return;
 
-        if (EnchantmentHelper.getLevel(ModEnchantments.WARDENSHOT, crossbow) <= 0) {
+        ItemStack echoShard = findEchoShard(player);
+        if (echoShard.isEmpty()){
             cir.setReturnValue(false);
             cir.cancel();
+            return;
         }
+        CrossbowItem.setCharged(crossbow, true);
+        putEchoShardProjectile(crossbow, echoShard.copy().split(1));
+        if (!player.getAbilities().creativeMode) {
+            echoShard.decrement(1);
+        }
+
+        cir.setReturnValue(true);
+        cir.cancel();
     }
 
     @Inject(method = "shoot", at = @At("HEAD"), cancellable = true)
@@ -77,5 +81,29 @@ public class CrossbowItemMixin {
         WardenshotEnchantment.fireSonicBoom(shooter);
 
         world.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0f, 1.0f);
+    }
+
+    private static ItemStack findEchoShard(PlayerEntity player) {
+        for (ItemStack stack : player.getInventory().main) {
+            if (stack.isOf(Items.ECHO_SHARD)) return stack;
+        }
+        if (player.getOffHandStack().isOf(Items.ECHO_SHARD)) {
+            return player.getOffHandStack();
+        }
+        return ItemStack.EMPTY;
+    }
+
+    private static void putEchoShardProjectile(ItemStack crossbow, ItemStack projectile) {
+        NbtCompound nbt = crossbow.getOrCreateNbt();
+        NbtList list;
+        if (nbt.contains("ChargedProjectiles", NbtElement.LIST_TYPE)) {
+            list = nbt.getList("ChargedProjectiles", NbtElement.COMPOUND_TYPE);
+        } else {
+            list = new NbtList();
+        }
+        NbtCompound projectileNbt = new NbtCompound();
+        projectile.writeNbt(projectileNbt);
+        list.add(projectileNbt);
+        nbt.put("ChargedProjectiles", list);
     }
 }
