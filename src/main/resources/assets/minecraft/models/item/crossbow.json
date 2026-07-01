@@ -62,6 +62,20 @@
     {
       "predicate": {
         "charged": 1,
+        "galosphere:glow_flare": 1
+      },
+      "model": "galosphere:item/crossbow_glow_flare"
+    },
+    {
+      "predicate": {
+        "charged": 1,
+        "galosphere:spectre_flare": 1
+      },
+      "model": "galosphere:item/crossbow_spectre_flare"
+    },
+    {
+      "predicate": {
+        "charged": 1,
         "echo_shards_plus:echo_loaded": 1
       },
       "model": "echo_shards_plus:item/crossbow_echo_loaded"
